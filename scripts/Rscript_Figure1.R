@@ -6,7 +6,7 @@ library(ggthemes)
 library(ggsci)
 library(ggplot2)
 library(readxl)
-data <- read_excel("clean_data/AMR_Parental_KAP_AD_preprocessed.xlsx")
+data <- read_excel("raw_data/Assignment_data.xlsx")
 view(data)
 #Antibiotic kills the bacteria
 data |> 
@@ -22,7 +22,7 @@ ggsave("figures/Antibiotic kills the bacteria.png", dpi=600)
 
 #Paracetamol is an antibiotic(No)
 data|> 
-  ggplot(aes(x = `Paracetamol is an antibiotic(No)`,fill =`Paracetamol is an antibiotic(No)` )) +
+  ggplot(aes(x = `Paracetamol is an antibiotic(No)`, fill =`Paracetamol is an antibiotic(No)` )) +
   geom_bar() +
   labs(x = "Paracetamol is an antibiotic(No)", 
        y = "Frequency", 
@@ -31,7 +31,7 @@ ggsave("figures/Paracetamol is an antibiotic(No).png", dpi=600)
 
 #Amoxicillin is an antibiotic(Yes)
 data|> 
-  ggplot(aes(x = `Amoxicillin is an antibiotic(Yes)`,fill =`Amoxicillin is an antibiotic(Yes)` )) +
+  ggplot(aes(x ="Amoxicillin is an antibiotic(Yes)",fill =`Amoxicillin is an antibiotic(Yes)` )) +
   geom_bar() +
   labs(x = "Amoxicillin is an antibiotic(Yes)", 
        y = "Frequency",
@@ -141,4 +141,12 @@ data|>
   )    
 ggsave("figures/Infectious disease are becoming difficult to treat with antibiotics(Yes).png", dpi=600)
 
-
+ggplot(data, aes(x = Percentage, y = reorder(Question, -Percentage), fill = Response)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of knowledge of antibiotic resistance among parents of school-going children (N=704)", 
+       x = "Percentage", y = NULL) +
+  scale_fill_manual(values = c("Don't Know" = "#d8b365", "No" = "#f5f5f5", "Yes" = "#5ab4ac")) +
+  theme_minimal() +
+  theme(legend.position = "top",
+        axis.text.y = element_text(size = 10),
+        plot.title = element_text(hjust = 0.5))
